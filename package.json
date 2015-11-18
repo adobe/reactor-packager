@@ -1,0 +1,14 @@
+{
+  "name": "turbine-gulp-packager",
+  "version": "0.0.1",
+  "description": "",
+  "repository": {
+    "type": "git",
+    "url": "git@git.corp.adobe.com:reactor/turbine-gulp-packager.git"
+  },
+  "dependencies": {
+    "gulp": "^3.9.0",
+    "gulp-zip": "^3.0.2",
+    "ramda": "^0.18.0"
+  }
+}
