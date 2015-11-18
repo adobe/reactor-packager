@@ -3,27 +3,26 @@
 var path = require('path');
 var zip = require('gulp-zip');
 var del = require('del');
+var empty = require('is-empty');
 
 var extensionDescriptor = require('./helpers/extensionDescriptor');
 var types = ['events', 'conditions', 'actions', 'dataElements', 'resources'];
 
 var R = require('ramda');
-var getKeyValue = R.curry(function(key, obj) { return obj[key]; });
 var getKeysFromObj = R.curry(function(obj, key) { return obj[key]; });
 var prependBasePath = R.curry(function(basePath, item) { return [basePath, item].join('/'); });
-var notEmpty = function(item) { return !!(item); };
 
 var getLibPaths = function(descriptor, types) {
   var getDescriptorKeys = R.compose(
     R.flatten,
-    R.filter(notEmpty),
+    R.filter(R.complement(empty)),
     R.map(getKeysFromObj(descriptor))
   );
 
   var getPaths = R.compose(
     R.map(prependBasePath(extensionDescriptor.libBasePath)),
-    R.filter(notEmpty),
-    R.map(getKeyValue('libPath')),
+    R.filter(R.complement(empty)),
+    R.pluck('libPath'),
     getDescriptorKeys
   );
 
@@ -46,7 +45,6 @@ var getPaths = function(descriptor, types) {
 
 module.exports = function(gulp, options) {
   var dependencyTasks = [];
-
   if (options.buildViewTask) {
     dependencyTasks.push(options.buildViewTask);
   }
