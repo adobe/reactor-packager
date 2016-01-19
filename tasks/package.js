@@ -12,7 +12,7 @@ module.exports = function(gulp, options) {
   }
 
   gulp.task('package', dependencyTasks, function() {
-    return gulp.src(getPaths(extensionDescriptor))
+    return gulp.src(getPaths(extensionDescriptor), {base: './'})
       .pipe(zip('package.zip'))
       .pipe(gulp.dest('./'));
   });
