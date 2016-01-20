@@ -14,8 +14,11 @@ var argv = require('yargs').alias('U', 'user').alias('u', 'user').argv;
 module.exports = function(gulp, options) {
   var all = [];
   var dependencyTasks = [];
-  if (options.buildViewTask) {
-    dependencyTasks.push(options.buildViewTask);
+
+  if (options) {
+    options.dependencyTasks.forEach(function(task) {
+      dependencyTasks.push(task);
+    });
   }
 
   gulp.task('package:clearCdnCache', function(callback) {

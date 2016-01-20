@@ -25,7 +25,7 @@ gulp.task('buildView', function() {
 });
 
 require('turbine-gulp-sandbox')(gulp, {
-  buildViewTask: 'buildView'
+  dependencyTasks: ['buildView']
 });
 ```
 
