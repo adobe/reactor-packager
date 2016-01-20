@@ -14,6 +14,9 @@
     "gulp-zip": "^3.1.0",
     "is-empty": "0.0.1",
     "ramda": "^0.19.1",
-    "ssh2-streams": "0.0.14"
+    "request": "^2.67.0",
+    "ssh2-streams": "0.0.14",
+    "through2": "^2.0.0",
+    "yargs": "^3.32.0"
   }
 }
