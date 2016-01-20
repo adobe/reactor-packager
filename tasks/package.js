@@ -7,8 +7,10 @@ var getPaths = require('./helpers/getPackagePaths.js');
 
 module.exports = function(gulp, options) {
   var dependencyTasks = [];
-  if (options.buildViewTask) {
-    dependencyTasks.push(options.buildViewTask);
+  if (options) {
+    options.dependencyTasks.forEach(function(task) {
+      dependencyTasks.push(task);
+    });
   }
 
   gulp.task('package', dependencyTasks, function() {
