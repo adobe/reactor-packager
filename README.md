@@ -6,7 +6,7 @@ In order to have the packaging functionality inside your extension, add turbine-
 
 ```javascript
 var gulp = require('gulp');
-require('turbine-gulp-packager')(gulp);
+require('@reactor/turbine-gulp-packager')(gulp);
 
 ## Building
 
@@ -24,7 +24,7 @@ gulp.task('buildView', function() {
   // Process your view here.
 });
 
-require('turbine-gulp-sandbox')(gulp, {
+require('@reactor/turbine-gulp-packager')(gulp, {
   dependencyTasks: ['buildView']
 });
 ```
