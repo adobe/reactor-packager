@@ -15,7 +15,7 @@ module.exports = function(gulp, options) {
   var all = [];
   var dependencyTasks = [];
 
-  if (options) {
+  if (options && options.dependencyTasks) {
     options.dependencyTasks.forEach(function(task) {
       dependencyTasks.push(task);
     });
