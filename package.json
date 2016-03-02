@@ -1,6 +1,6 @@
 {
   "name": "@reactor/turbine-gulp-packager",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Gulp task that will build a `package.zip` file for a Turbine extension.",
   "author": {
     "name": "DTM",
@@ -11,7 +11,7 @@
     "url": "git@git.corp.adobe.com:reactor/turbine-gulp-packager.git"
   },
   "publishConfig": {
-    "registry":"https://artifactory.corp.adobe.com/artifactory/api/npm/npm-mcps-release-local"
+    "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-mcps-release-local"
   },
   "dependencies": {
     "del": "^2.2.0",
