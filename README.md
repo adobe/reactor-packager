@@ -1,12 +1,12 @@
-# turbine-gulp-packager
+# extension-support-packager
 
 This project provides gulp tasks for packaging an extension.
 
-In order to have the packaging functionality inside your extension, add turbine-gulp-packager to the `devDependencies` of your project's `package.json` and `npm install` it. In your `gulpfile.js`, require the builder and pass in your gulp instance as follows:
+In order to have the packaging functionality inside your extension, add extension-support-packager to the `devDependencies` of your project's `package.json` and `npm install` it. In your `gulpfile.js`, require the builder and pass in your gulp instance as follows:
 
 ```javascript
 var gulp = require('gulp');
-require('@reactor/turbine-gulp-packager')(gulp);
+require('@reactor/extension-support-packager')(gulp);
 
 ## Building
 
@@ -15,7 +15,7 @@ To build the `package.zip` file, run `gulp package` from the command line within
 ```
 ## Preprocessing extension views
 
-It may be that your extension views require some preprocessing. Maybe your views use JSX, Stylus, or some other tech that needs preprocessing before they can be displayed within the sandbox. To handle these cases, create a gulp task that performs the preprocessing and pass the name of that task to turbine-gulp-packager as follows:
+It may be that your extension views require some preprocessing. Maybe your views use JSX, Stylus, or some other tech that needs preprocessing before they can be displayed within the sandbox. To handle these cases, create a gulp task that performs the preprocessing and pass the name of that task to extension-support-packager as follows:
 
 ```javacript
 var gulp = require('gulp');
@@ -24,7 +24,7 @@ gulp.task('buildView', function() {
   // Process your view here.
 });
 
-require('@reactor/turbine-gulp-packager')(gulp, {
+require('@reactor/extension-support-packager')(gulp, {
   dependencyTasks: ['buildView']
 });
 ```
