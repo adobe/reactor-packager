@@ -10,7 +10,7 @@ var R = require('ramda');
 var prependBasePath = R.curry(function(basePath, item) { return [basePath, item].join('/'); });
 
 var getAvailableTypes = function(descriptor) {
-  var allTypes = ['events', 'conditions', 'actions', 'dataElements', 'resources'];
+  var allTypes = ['events', 'conditions', 'actions', 'dataElements', 'helpers'];
   return R.intersection(allTypes, R.keys(descriptor));
 };
 

@@ -1,6 +1,6 @@
 {
   "name": "@reactor/extension-support-packager",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Gulp task that will build a `package.zip` file for a Turbine extension.",
   "author": {
     "name": "DTM",
