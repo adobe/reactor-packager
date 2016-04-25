@@ -6,8 +6,7 @@ var os = require('os');
 var through = require('through2');
 var extensionDescriptor = require('./helpers/extensionDescriptor');
 var getPaths = require('./helpers/getPackagePaths.js');
-var packageData = require(path.join(process.cwd(), './package.json'));
-var extensionName = packageData.name;
+var extensionName = extensionDescriptor.name;
 var request = require('request');
 var argv = require('yargs').alias('U', 'user').alias('u', 'user').argv;
 
