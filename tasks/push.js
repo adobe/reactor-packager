@@ -20,7 +20,7 @@ module.exports = function(gulp, options) {
     });
   }
 
-  gulp.task('package:clearCdnCache', function(callback) {
+  gulp.task('package:clearCdnCache', ['package:pushPackageToCdn'], function(callback) {
     gulp.src(getPaths(extensionDescriptor), {base: process.cwd()})
       .pipe(through.obj(function (chunk, enc, cb) {
         if (fs.lstatSync(chunk.path).isFile()) {
