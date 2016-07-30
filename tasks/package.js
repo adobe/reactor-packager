@@ -1,27 +1,21 @@
 'use strict';
 
-var zip = require('gulp-zip');
-var del = require('del');
+var fs = require('fs');
+var archiver = require('archiver');
 var extensionDescriptor = require('./helpers/extensionDescriptor');
 var getPaths = require('./helpers/getPackagePaths.js');
 
-module.exports = function(gulp, options) {
-  var dependencyTasks = [];
-  if (options && options.dependencyTasks) {
-    options.dependencyTasks.forEach(function(task) {
-      dependencyTasks.push(task);
-    });
-  }
+module.exports = function() {
+  var output = fs.createWriteStream('package.zip');
+  var zipArchive = archiver('zip');
 
-  gulp.task('package', dependencyTasks, function() {
-    return gulp.src(getPaths(extensionDescriptor), {base: './'})
-      .pipe(zip('package.zip'))
-      .pipe(gulp.dest('./'));
+  zipArchive.pipe(output);
+
+  var filepaths = getPaths(extensionDescriptor);
+
+  filepaths.forEach(function(filepath) {
+    zipArchive.file(filepath);
   });
 
-  gulp.task('package:clean', function() {
-    return del([
-      './package.zip'
-    ]);
-  });
+  zipArchive.finalize();
 };
