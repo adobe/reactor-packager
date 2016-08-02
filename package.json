@@ -14,15 +14,19 @@
     "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-mcps-release-local"
   },
   "dependencies": {
-    "del": "^2.2.0",
-    "glob": "^7.0.3",
+    "@reactor/get-required-paths": "^1.0.0",
+    "archiver": "^1.0.1",
+    "glob": "^7.0.5",
     "gulp": "^3.9.1",
     "gulp-ssh": "^0.5.5",
-    "gulp-zip": "^3.2.0",
     "is-empty": "1.0.0",
     "ramda": "^0.21.0",
     "request": "^2.72.0",
     "through2": "^2.0.1",
-    "yargs": "^4.6.0"
+    "yargs": "^4.6.0",
+    "yazl": "^2.4.1"
+  },
+  "bin": {
+    "reactor-packager": "./tasks/index.js"
   }
 }
