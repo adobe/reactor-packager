@@ -1,6 +1,6 @@
 {
   "name": "@reactor/extension-support-packager",
-  "version": "2.0.0",
+  "version": "2.1.0",
   "description": "Task that will build a `package.zip` file for a Turbine extension.",
   "author": {
     "name": "DTM",
