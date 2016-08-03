@@ -1,82 +1,86 @@
 'use strict';
-var path = require('path');
+
 var fs = require('fs');
-var GulpSSH = require('gulp-ssh');
+var path = require('path');
 var os = require('os');
-var through = require('through2');
+var Client = require('ssh2').Client;
+
+var clientDefaults = {
+  port: 22,
+  host: 'adobetag.upload.akamai.com',
+  username: 'sshacs',
+  privateKey: fs.readFileSync(path.join(os.homedir(), '.ssh/dtm.akamai.prod')),
+  basePath: '/126057/activation/extensionsdemo/'
+};
+
 var extensionDescriptor = require('./helpers/extensionDescriptor');
-var getPaths = require('./helpers/getPackagePaths.js');
+var localPaths = require('./helpers/getPackagePaths.js')(extensionDescriptor);
 var extensionName = extensionDescriptor.name;
-var request = require('request');
-var argv = require('yargs').alias('U', 'user').alias('u', 'user').argv;
+var baseDestDir = clientDefaults.basePath;
 
-module.exports = function(gulp, options) {
-  var all = [];
-  var dependencyTasks = [];
-
-  if (options && options.dependencyTasks) {
-    options.dependencyTasks.forEach(function(task) {
-      dependencyTasks.push(task);
-    });
+var putFiles = function(sftp) {
+  if (localPaths.length === 0) {
+    console.log('All files were uploaded.');
+    process.exit(0);
   }
 
-  gulp.task('package:clearCdnCache', ['package:pushPackageToCdn'], function(callback) {
-    gulp.src(getPaths(extensionDescriptor), {base: process.cwd()})
-      .pipe(through.obj(function (chunk, enc, cb) {
-        if (fs.lstatSync(chunk.path).isFile()) {
-          this.push(
-            'http://assets.adobedtm.com/activation/extensionsdemo' +
-            path.join(
-              extensionName,
-              chunk.relative
-            ));
-        }
-        cb();
-      }))
-      .on('data', function (data) {
-        all.push(data)
-      }).on('end', function () {
-        var requestData = {
-          uri: "https://api.ccu.akamai.com/ccu/v2/queues/default",
-          method: "POST",
-          json: {
-            objects: all
-          }
-        };
+  var localPath = localPaths.shift();
+  var destPath = path.join(baseDestDir, extensionName, localPath);
 
-        if (argv.user) {
-          var credentials = argv.user.split(':');
-          requestData.auth = {
-            user: credentials[0],
-            pass: credentials[1],
-            sendImmediately: false
-          };
+  recursiveMkDirIfNotExists(
+    sftp,
+    baseDestDir,
+    path.dirname(destPath.replace(baseDestDir, '')).split(path.sep),
+    function () {
+      sftp.fastPut(localPath, destPath, function (err) {
+        if (err) {
+          throw err;
+        } else {
+          console.log('Uploaded: ', localPath + ' -> ' + destPath);
+          putFiles(sftp);
         }
-
-        request(requestData, function (error, response, body) {
-          console.log(body);
-          callback();
-        });
       });
-  });
-
-  gulp.task('package:pushPackageToCdn', dependencyTasks, function() {
-    var config = {
-      host: 'adobetag.upload.akamai.com',
-      port: 22,
-      username: 'sshacs',
-      privateKey: fs.readFileSync(path.join(os.homedir(), '.ssh/dtm.akamai.prod')),
-      basePath: '/126057/activation/extensionsdemo/'
-    };
-
-    var gulpSSH = new GulpSSH({
-      ignoreErrors: false,
-      sshConfig: config
-    });
-
-    return gulp.src(getPaths(extensionDescriptor), {base: process.cwd()})
-      .pipe(gulpSSH.dest(path.join(config.basePath, extensionName)));
-  });
-
-  gulp.task('package:push', ['package:pushPackageToCdn', 'package:clearCdnCache']);
+    }
+  );
 };
+
+var recursiveMkDirIfNotExists = function (sftp, baseDirPath, dirPaths, cb) {
+  if (dirPaths.length === 0) {
+    cb();
+    return;
+  }
+
+  var dirPath = path.join(baseDirPath, dirPaths.shift());
+  sftp.stat(dirPath, function(err) {
+    if (err) {
+      if (err.message !== 'No such file') {
+        console.log(err);
+        process.exit(1);
+      }
+
+      sftp.mkdir(dirPath, function (err) {
+        if (err) {
+          console.log(err);
+          process.exit(1);
+        }
+
+        console.log('Create directory: ', dirPath);
+        recursiveMkDirIfNotExists(sftp, dirPath, dirPaths, cb);
+      });
+    } else {
+     recursiveMkDirIfNotExists(sftp, dirPath, dirPaths, cb);
+    }
+  });
+};
+
+module.exports = function () {
+  var conn = new Client();
+  conn.on('ready', function() {
+    console.log('Client :: ready');
+    conn.sftp(function(err, sftp) {
+      if (err) throw err;
+      putFiles(sftp);
+    });
+  }).connect(clientDefaults);
+};
+
