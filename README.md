@@ -1,36 +1,46 @@
 # extension-support-packager
 
-This project provides gulp tasks for packaging an extension.
+This project provides a command-line utility for packaging an extension into a zip file ready to be uploaded to DTM.
 
-In order to have the packaging functionality inside your extension, add extension-support-packager to the `devDependencies` of your project's `package.json` and `npm install` it. In your `gulpfile.js`, require the builder and pass in your gulp instance as follows:
+## Installing the Sandbox
+
+To use this project you will need to have [Node.js](https://nodejs.org/en/) installed on your computer. Do a Google search for finding the best method to install it on your computer's operating system. Once you install Node.js you will also have access to the [npm](https://www.npmjs.com/) package manager for JavaScript. You will need a version of npm greater than 2.7.0. You can check the installed version by running
+
+```
+npm -v
+```
+
+After you have installed Node.js on your machine, you will need to initialize your project. Create a folder for your project if you don't already have one. Inside the folder, run
+
+```
+npm init
+```
+
+You will need to provide the information requested on the screen. After this process is complete, you should have a file called `package.json` inside your folder.
+
+You will then need to install extension-support-packager and save it in your project's [`devDependencies`](https://docs.npmjs.com/files/package.json#devdependencies) by running
+
+```
+echo "@reactor:registry=https://artifactory.corp.adobe.com/artifactory/api/npm/npm-mcps-release-local/" > .npmrc
+npm install @reactor/extension-support-packager --save-dev
+```
+
+While that will install the latest version, you my find a list of all versions under the [extension-support-packager package](https://artifactory.corp.adobe.com/artifactory/webapp/#/artifacts/browse/tree/General/npm-mcps-release-local/@reactor/extension-support-packager/-/@reactor) within Artifactory.
+
+## Packaging
+
+To build a `package.zip` file for your extension, run `node_modules/.bin/reactor-packager` from the command line within your project's directory. A `package.zip` file should appear in your project's directory.
+
+Rather than type the path to the `reactor-packager` script each time you would like the run the packager, you may wish to set up a [script alias](https://docs.npmjs.com/misc/scripts) by adding a `scripts` node to your `package.json` as follows:
 
 ```javascript
-var gulp = require('gulp');
-require('@reactor/extension-support-packager')(gulp);
-
-## Building
-
-To build the `package.zip` file, run `gulp package` from the command line within your project's directory.
-
-```
-## Preprocessing extension views
-
-It may be that your extension views require some preprocessing. Maybe your views use JSX, Stylus, or some other tech that needs preprocessing before they can be displayed within the sandbox. To handle these cases, create a gulp task that performs the preprocessing and pass the name of that task to extension-support-packager as follows:
-
-```javacript
-var gulp = require('gulp');
-
-gulp.task('buildView', function() {
-  // Process your view here.
-});
-
-require('@reactor/extension-support-packager')(gulp, {
-  dependencyTasks: ['buildView']
-});
+{
+  ...
+  "scripts": {
+    "package": "reactor-packager"
+  }
+  ...
+}
 ```
 
-By doing so, your task will also be run when running `gulp package`.
-
-## Cleaning
-
-If you ever want to remove the `package.zip` file from your project you can run `gulp package:clean`.
+Once this is in place, you may then run the packager by executing the command `npm run package` from the command line.
