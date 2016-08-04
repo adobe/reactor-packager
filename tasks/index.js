@@ -8,6 +8,9 @@ switch (task) {
   case 'push':
     require('./push')();
     break;
+  case 'prepare':
+    require('./prepare')();
+    break;
   case 'package':
   default:
     require('./package')();
