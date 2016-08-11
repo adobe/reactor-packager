@@ -11,8 +11,6 @@ var isEmpty = require('is-empty');
 
 var R = require('ramda');
 
-var prependBasePath = R.curry(function(basePath, item) { return [basePath, item].join('/'); });
-
 var getAvailableTypes = function(descriptor) {
   var allTypes = ['events', 'conditions', 'actions', 'dataElements', 'helpers'];
   return R.intersection(allTypes, R.keys(descriptor));
@@ -35,7 +33,6 @@ var getLibPaths = function(descriptor) {
   var getPaths = R.compose(
     R.uniq,
     R.reduce(recursivelyAccumulateRequiredPaths, []),
-    R.map(prependBasePath(descriptor.libBasePath)),
     R.filter(R.complement(isEmpty)),
     R.pluck('libPath'),
     R.flatten,
