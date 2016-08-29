@@ -43,4 +43,4 @@ Rather than type the path to the `reactor-packager` script each time you would l
 }
 ```
 
-Once this is in place, you may then run the packager by executing the command `npm run packager` from the command line.
+Once this is in place, you may then run the packager by executing the command `npm run package` from the command line.
