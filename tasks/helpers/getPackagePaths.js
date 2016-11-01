@@ -17,10 +17,6 @@ var getAvailableTypes = function(descriptor) {
 };
 
 var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
-  if (!path.extname(hostPath)) {
-    hostPath += '.js';
-  }
-
   accumPaths.push(hostPath);
   var source = fs.readFileSync(hostPath, {encoding: 'utf8'});
   getRequiredPaths(source).reduce(function(accumPaths, relativeRequiredPath) {
