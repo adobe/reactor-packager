@@ -35,6 +35,7 @@ var getLibPaths = function(descriptor) {
     R.concat(descriptor.hostedLibFiles || []),
     R.reduce(recursivelyAccumulateRequiredPaths, []),
     R.filter(R.complement(isEmpty)),
+    R.concat([descriptor.icon]),
     R.pluck('libPath'),
     R.flatten,
     R.props(getAvailableTypes(descriptor))
