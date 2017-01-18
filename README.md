@@ -1,6 +1,6 @@
 # extension-support-packager
 
-This project provides a command-line utility for packaging an extension into a zip file ready to be uploaded to DTM.
+This project provides a command-line utility for packaging an extension into a zip file ready to be uploaded to DTM. The zip file will exclude anything not necessary for the extension to run properly.
 
 ## Installing the Packager
 
