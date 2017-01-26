@@ -1,7 +1,7 @@
 {
-  "name": "@reactor/extension-support-packager",
+  "name": "@adobe/composer-packager",
   "version": "2.4.1",
-  "description": "Task that will build a `package.zip` file for a Turbine extension.",
+  "description": "Task that will build a zip file for a Composer extension.",
   "author": {
     "name": "DTM",
     "email": "DTM-Engineering@adobe.com"
@@ -10,11 +10,8 @@
     "type": "git",
     "url": "git@git.corp.adobe.com:reactor/extension-support-packager.git"
   },
-  "publishConfig": {
-    "registry": "https://artifactory.corp.adobe.com/artifactory/api/npm/npm-mcps-release-local"
-  },
   "dependencies": {
-    "@reactor/extension-support-validator": "^1.0.0",
+    "@adobe/composer-validator": "^1.0.0",
     "archiver": "^1.0.1",
     "chalk": "^1.1.3",
     "copy": "^0.3.0",
@@ -29,6 +26,6 @@
     "yazl": "^2.4.1"
   },
   "bin": {
-    "reactor-packager": "./tasks/index.js"
+    "composer-packager": "./tasks/index.js"
   }
 }

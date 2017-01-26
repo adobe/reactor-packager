@@ -3,7 +3,7 @@
 'use strict';
 
 var chalk = require('chalk');
-var validate = require('@reactor/extension-support-validator');
+var validate = require('@adobe/composer-validator');
 var extensionDescriptor = require('./helpers/extensionDescriptor');
 
 var error = validate(extensionDescriptor);
