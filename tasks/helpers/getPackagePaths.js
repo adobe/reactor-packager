@@ -3,7 +3,7 @@
 var path = require('path');
 var glob = require('glob');
 var fs = require('fs');
-var getRequiredPaths = require('@reactor/get-required-paths');
+var matchRequires = require('match-requires');
 
 // We're using `is-empty` package becasue isEmpty from Ramda does NOT detect `null` or `undefined`
 // as empty values.
@@ -19,10 +19,18 @@ var getAvailableTypes = function(descriptor) {
 var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
   accumPaths.push(hostPath);
   var source = fs.readFileSync(hostPath, {encoding: 'utf8'});
-  getRequiredPaths(source).reduce(function(accumPaths, relativeRequiredPath) {
-    var normalizedRequiredPath = path.join(path.dirname(hostPath), relativeRequiredPath);
-    return recursivelyAccumulateRequiredPaths(accumPaths, normalizedRequiredPath);
-  }, accumPaths);
+  matchRequires(source)
+    // matchRequires returns objects with some cruft. We just care about the module paths.
+    .map(result => result.module)
+    // Only care about relative paths. We don't care about require statements for core modules.
+    .filter(module => module.indexOf('.') === 0)
+    // Allow extension devs to require JS files without the js extension
+    .map(module => path.extname(module) === '.js' ? module : module + '.js')
+    // Add the paths to our list and recursively search their associated files.
+    .reduce(function(accumPaths, relativeRequiredPath) {
+      var normalizedRequiredPath = path.join(path.dirname(hostPath), relativeRequiredPath);
+      return recursivelyAccumulateRequiredPaths(accumPaths, normalizedRequiredPath);
+    }, accumPaths);
   return accumPaths;
 };
 
