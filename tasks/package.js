@@ -6,7 +6,9 @@ var extensionDescriptor = require('./helpers/extensionDescriptor');
 var getPaths = require('./helpers/getPackagePaths.js');
 
 module.exports = function() {
-  var output = fs.createWriteStream('package.zip');
+  var output = fs.createWriteStream(
+   'package-' + extensionDescriptor.name + '-' + extensionDescriptor.version + '.zip'
+  );
   var zipArchive = archiver('zip');
 
   zipArchive.pipe(output);
