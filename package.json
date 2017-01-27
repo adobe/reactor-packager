@@ -1,6 +1,6 @@
 {
   "name": "@adobe/composer-packager",
-  "version": "2.4.1",
+  "version": "2.5.0",
   "description": "Task that will build a zip file for a Composer extension.",
   "author": {
     "name": "DTM",
