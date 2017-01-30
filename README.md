@@ -24,8 +24,6 @@ You will then need to install `composer-packager` and save it in your project's 
 npm i @adobe/composer-packager --save-dev
 ```
 
-While that will install the latest version, you my find a list of all versions under the [extension-support-packager package](https://artifactory.corp.adobe.com/artifactory/webapp/#/artifacts/browse/tree/General/npm-mcps-release-local/@reactor/extension-support-packager/-/@reactor) within Artifactory.
-
 ## Packaging
 
 To build a `package.zip` file for your extension, run `node_modules/.bin/composer-packager` from the command line within your project's directory. A `package.zip` file should appear in your project's directory.
