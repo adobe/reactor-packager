@@ -19,9 +19,7 @@
     "is-empty": "1.0.0",
     "match-requires": "^1.0.2",
     "node-fs-extra": "^0.8.1",
-    "node-ssh": "^2.0.7",
     "ramda": "^0.21.0",
-    "through2": "^2.0.1",
     "yargs": "^4.6.0",
     "yazl": "^2.4.1"
   },
