@@ -30,7 +30,7 @@ var isEmpty = require('is-empty');
 var R = require('ramda');
 
 var getAvailableTypes = function(descriptor) {
-  var allTypes = ['events', 'conditions', 'actions', 'dataElements', 'helpers'];
+  var allTypes = ['events', 'conditions', 'actions', 'dataElements', 'sharedModules'];
   return R.intersection(allTypes, R.keys(descriptor));
 };
 
