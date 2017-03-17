@@ -3,7 +3,7 @@
   "version": "2.5.7",
   "description": "Task that will build a zip file for an extension.",
   "author": {
-    "name": "Adobe Systems Incorporated",
+    "name": "Adobe Systems",
     "url": "http://adobe.com",
     "email": "reactor@adobe.com"
   },
