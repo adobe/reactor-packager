@@ -1,7 +1,7 @@
 {
   "name": "@adobe/reactor-packager",
   "version": "2.5.8",
-  "description": "Task that will build a zip file for an extension.",
+  "description": "Command line utility for packaging a Launch extension into a zip file.",
   "author": {
     "name": "Adobe Systems",
     "url": "http://adobe.com",
@@ -9,7 +9,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git@git.corp.adobe.com:reactor/extension-support-packager.git"
+    "url": "git@github.com:Adobe-Marketing-Cloud/reactor-packager.git"
   },
   "dependencies": {
     "@adobe/reactor-validator": "^1.0.0",

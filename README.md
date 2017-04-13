@@ -1,6 +1,6 @@
 # @adobe/reactor-packager
 
-This project provides a command-line utility for packaging an extension into a zip file ready to be uploaded to DTM. While using this utility is not necessary, it will validate your extension and make an effort to exclude anything from the zip file not necessary for the extension to run properly.
+This project provides a command-line utility for packaging a Launch extension into a zip file. While using this utility is not necessary, it will validate your extension and make an effort to exclude anything from the zip file not necessary for the extension to run properly.
 
 ## Installing the Packager
 
