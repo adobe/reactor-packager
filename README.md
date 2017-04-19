@@ -1,5 +1,7 @@
 # @adobe/reactor-packager
 
+[![npm (scoped)](https://img.shields.io/npm/v/@adobe/reactor-packager.svg?style=flat)](https://www.npmjs.com/package/@adobe/reactor-packager)
+
 This project provides a command-line utility for packaging a Launch extension into a zip file. While using this utility is not necessary, it will validate your extension and make an effort to exclude anything from the zip file not necessary for the extension to run properly.
 
 ## Installing the Packager
