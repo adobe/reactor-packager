@@ -22,14 +22,10 @@ var path = require('path');
 var fileExists = function(filepath) {
   // We need to check if a file exists in a case sensitive way that is not OS dependent.
   var fileDirectory = path.dirname(filepath);
-  var fileBaseName = path.basename(filepath);
   var folderFiles = fs.readdirSync(fileDirectory);
+  var fileBaseName = path.basename(filepath);
 
-  if (folderFiles.indexOf(fileBaseName) === -1) {
-    return false;
-  }
-
-  return true;
+  return folderFiles.indexOf(fileBaseName) === -1;
 };
 
 module.exports = function() {
