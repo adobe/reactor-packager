@@ -25,7 +25,7 @@ var fileExists = function(filepath) {
   var folderFiles = fs.readdirSync(fileDirectory);
   var fileBaseName = path.basename(filepath);
 
-  return folderFiles.indexOf(fileBaseName) === -1;
+  return folderFiles.indexOf(fileBaseName) !== -1;
 };
 
 module.exports = function() {
