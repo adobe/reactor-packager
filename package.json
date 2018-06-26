@@ -21,9 +21,7 @@
     "is-empty": "1.2.0",
     "match-requires": "^2.0.1",
     "node-fs-extra": "^0.8.2",
-    "ramda": "^0.25.0",
-    "yargs": "^11.0.0",
-    "yazl": "^2.4.3"
+    "ramda": "^0.25.0"
   },
   "bin": {
     "reactor-packager": "./tasks/index.js"
