@@ -33,7 +33,7 @@ var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
   var source = fs.readFileSync(hostPath, {encoding: 'utf8'});
   matchRequires(source)
     // matchRequires returns objects with some cruft. We just care about the module paths.
-    .map(result => result.module)
+    .map(result => result.name)
     // Only care about relative paths. We don't care about require statements for core modules.
     .filter(module => module.indexOf('.') === 0)
     // Allow extension devs to require JS files without the js extension
