@@ -13,7 +13,7 @@
     "url": "git@github.com:Adobe-Marketing-Cloud/reactor-packager.git"
   },
   "dependencies": {
-    "@adobe/reactor-validator": "^2.0.3",
+    "@adobe/reactor-validator": "^2.0.5",
     "archiver": "^2.1.1",
     "chalk": "^2.4.1",
     "copy": "^0.3.2",
