@@ -6,7 +6,7 @@ Launch, by Adobe, is a next-generation tag management solution enabling simplifi
 
 The extension packager is a command-line utility for packaging a Launch extension into a zip file suitable to be uploaded to Launch. While using this utility is not necessary, it will validate that your extension appears well-structured (e.g., files that are referenced exist in the directory) and make an effort to exclude anything from the zip file not necessary for the extension to operate.
 
-For more information about developing an extension for Launch, please visit our [extension development guide](https://developer.adobelaunch.com/guides/extensions/).
+For more information about developing an extension for Launch, please visit our [extension development guide](https://developer.adobelaunch.com/extensions/).
 
 ## Usage
 
