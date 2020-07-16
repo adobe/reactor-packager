@@ -14,13 +14,11 @@
   },
   "dependencies": {
     "@adobe/reactor-validator": "^2.0.6",
-    "archiver": "^3.0.0",
+    "archiver": "^4.0.2",
     "chalk": "^2.4.1",
-    "copy": "^0.3.2",
     "glob": "^7.1.2",
     "is-empty": "1.2.0",
     "match-requires": "^2.0.1",
-    "node-fs-extra": "^0.8.2",
     "ramda": "^0.25.0"
   },
   "bin": {
