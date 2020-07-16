@@ -25,14 +25,5 @@ if (error) {
   process.exit(1);
 }
 
-var task = process.argv.slice(2)[0];
-
-switch (task) {
-  case 'prepare':
-    require('./prepare')();
-    break;
-  case 'package':
-  default:
-    require('./package')();
-    break;
-}
+var packager = require('./package');
+packager();
