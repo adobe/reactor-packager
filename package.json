@@ -13,15 +13,18 @@
     "url": "git@github.com:adobe/reactor-packager.git"
   },
   "dependencies": {
-    "@adobe/reactor-validator": "^2.0.6",
+    "@adobe/reactor-validator": "^2.0.8",
     "archiver": "^4.0.2",
-    "chalk": "^2.4.1",
-    "glob": "^7.1.2",
+    "chalk": "^4.1.0",
+    "glob": "^7.1.6",
     "is-empty": "1.2.0",
     "match-requires": "^2.0.1",
-    "ramda": "^0.25.0"
+    "ramda": "^0.27.0"
   },
   "bin": {
     "reactor-packager": "./tasks/index.js"
+  },
+  "engines": {
+    "node": ">=10.0.0"
   }
 }
