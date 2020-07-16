@@ -31,7 +31,7 @@ var getAvailableTypes = function(descriptor) {
 var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
   accumPaths.push(hostPath);
   var source = fs.readFileSync(hostPath, {encoding: 'utf8'});
-  matchRequires(source)
+  matchRequires(source, true)
     // matchRequires returns objects with some cruft. We just care about the module paths.
     .map(result => result.name)
     // Only care about relative paths. We don't care about require statements for core modules.
