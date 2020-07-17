@@ -10,11 +10,7 @@ For more information about developing an extension for Launch, please visit our 
 
 ## Usage
 
-Before running the packager, you must first have [Node.js](https://nodejs.org/en/) installed on your computer. Your npm version (npm comes bundled with Node.js) will need to be at least 5.2.0. You can check the installed version by running the following command from a command line:
-                                                                                                      
-```
-npm -v
-```
+Before running the packager, you must first have [Node.js](https://nodejs.org/en/) installed on your computer.
 
 Once Node.js is installed, run the packager by executing the following command from the command line within your project's directory:
 
