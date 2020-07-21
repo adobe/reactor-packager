@@ -52,10 +52,12 @@ var getLibPaths = function(descriptor) {
   // got at this point and we append the base path to the remaining values.
   var getPaths = R.compose(
     R.uniq,
+    R.filter(R.complement(isEmpty)),
+    R.append(descriptor.iconPath),
     R.concat(descriptor.hostedLibFiles || []),
     R.reduce(recursivelyAccumulateRequiredPaths, []),
     R.filter(R.complement(isEmpty)),
-    R.concat([descriptor.iconPath, descriptor.main]),
+    R.append(descriptor.main),
     R.pluck('libPath'),
     R.flatten,
     R.props(getAvailableTypes(descriptor))
