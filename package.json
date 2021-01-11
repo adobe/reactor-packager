@@ -1,6 +1,6 @@
 {
   "name": "@adobe/reactor-packager",
-  "version": "4.0.1",
+  "version": "4.0.3",
   "description": "Command line utility for packaging a Launch extension into a zip file.",
   "author": {
     "name": "Adobe Systems",
@@ -22,7 +22,7 @@
     "ramda": "^0.27.0"
   },
   "bin": {
-    "reactor-packager": "./tasks/index.js"
+    "reactor-packager": "tasks/index.js"
   },
   "engines": {
     "node": ">=10.0.0"
