@@ -14,7 +14,7 @@
   },
   "dependencies": {
     "@adobe/reactor-validator": "^2.0.8",
-    "archiver": "^4.0.2",
+    "archiver": "^5.2.0",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "is-empty": "1.2.0",
