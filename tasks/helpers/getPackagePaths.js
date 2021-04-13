@@ -17,10 +17,6 @@ var glob = require('glob');
 var fs = require('fs');
 var matchRequires = require('match-requires');
 
-// We're using `is-empty` package becasue isEmpty from Ramda does NOT detect `null` or `undefined`
-// as empty values.
-var isEmpty = require('is-empty');
-
 var R = require('ramda');
 
 var getAvailableTypes = function(descriptor) {
@@ -41,23 +37,36 @@ var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
     // Add the paths to our list and recursively search their associated files.
     .reduce(function(accumPaths, relativeRequiredPath) {
       var normalizedRequiredPath = path.join(path.dirname(hostPath), relativeRequiredPath);
-      return recursivelyAccumulateRequiredPaths(accumPaths, normalizedRequiredPath);
+
+      // only process the require statements for a file we haven't seen yet to avoid circular imports
+      if (accumPaths.indexOf(normalizedRequiredPath) === -1) {
+        return recursivelyAccumulateRequiredPaths(accumPaths, normalizedRequiredPath);
+      }
+
+      return accumPaths;
     }, accumPaths);
   return accumPaths;
 };
+
+var ensureArray = function (value) {
+  if (Array.isArray(value)) {
+    return value;
+  } else if (value) {
+    return [value];
+  } else {
+    return [];
+  }
+}
 
 var getLibPaths = function(descriptor) {
   // We're getting the available types values from the descriptor. We flatten the array structure
   // and then get all the `libPath` values for all the delegates. We're dropping any empty value we
   // got at this point and we append the base path to the remaining values.
   var getPaths = R.compose(
-    R.uniq,
-    R.filter(R.complement(isEmpty)),
-    R.append(descriptor.iconPath),
-    R.concat(descriptor.hostedLibFiles || []),
+    R.concat(ensureArray(descriptor.iconPath)),
+    R.concat(ensureArray(descriptor.hostedLibFiles)),
     R.reduce(recursivelyAccumulateRequiredPaths, []),
-    R.filter(R.complement(isEmpty)),
-    R.append(descriptor.main),
+    R.concat(ensureArray(descriptor.main)),
     R.pluck('libPath'),
     R.flatten,
     R.props(getAvailableTypes(descriptor))

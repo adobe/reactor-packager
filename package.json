@@ -17,7 +17,6 @@
     "archiver": "^5.2.0",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
-    "is-empty": "1.2.0",
     "match-requires": "^2.0.1",
     "ramda": "^0.27.0"
   },
