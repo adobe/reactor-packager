@@ -51,7 +51,7 @@ var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
 var ensureArray = function (value) {
   if (Array.isArray(value)) {
     return value;
-  } else if (value) {
+  } else if (value != null) {
     return [value];
   } else {
     return [];
