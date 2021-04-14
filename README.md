@@ -37,10 +37,16 @@ npm link
 Then, in a directory containing an extension (any extension you would like to use for testing), run the following command:
 
 ```
-npx @adobe/reactor-packager
+npx @adobe/reactor-packager [options]
 ```
 
 Npx will execute the packager tool using your locally linked code rather than the code published on the public npm repository.
+
+To view the available options run the following command:
+
+```
+npx @adobe/reactor-packager --help
+```
  
 ## Licensing
 
