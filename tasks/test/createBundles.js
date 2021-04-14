@@ -17,16 +17,16 @@
 var path = require('path');
 var exec = require('child_process').exec;
 
-// console.log('about to exec')
-
 var errorHandler = function(error, stdout, stderr) {
   if (error) {
     console.error(`error: ${error.message}`);
+    process.exit(1);
     return;
   }
 
   if (stderr) {
     console.error(`stderr: ${stderr}`);
+    process.exit(1);
     return;
   }
 

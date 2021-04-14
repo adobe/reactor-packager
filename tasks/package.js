@@ -29,7 +29,6 @@ var getOutputDirectory = function() {
       throw new Error('--output-dir "' + directory + '" is not a directory');
     }
 
-    // console.log('__dirname is ', __dirname)
     return path.resolve('.', directory);
   }
 

@@ -13,12 +13,10 @@
  ****************************************************************************************/
 
 'use strict';
-console.log('HELLO FROM INDEX')
+
 var chalk = require('chalk');
 var validate = require('@adobe/reactor-validator');
 var extensionDescriptor = require('./helpers/extensionDescriptor');
-
-console.log('running locally')
 
 var error = validate(extensionDescriptor);
 
@@ -27,5 +25,10 @@ if (error) {
   process.exit(1);
 }
 
-var packager = require('./package');
-packager();
+try {
+  var packager = require('./package');
+  packager();
+} catch (e) {
+  console.error(chalk.red(e.message));
+  process.exit(1);
+}
