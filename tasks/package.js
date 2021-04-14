@@ -18,6 +18,23 @@ var extensionDescriptor = require('./helpers/extensionDescriptor');
 var fs = require('fs');
 var getPaths = require('./helpers/getPackagePaths.js');
 var path = require('path');
+var process = require('process');
+
+var getOutputDirectory = function() {
+  var args = process.argv.slice(2);
+  if (args.length === 2 && args[0] === '--output-dir') {
+    var directory = args[1];
+
+    if (!fs.lstatSync(directory).isDirectory()) {
+      throw new Error('--output-dir "' + directory + '" is not a directory');
+    }
+
+    // console.log('__dirname is ', __dirname)
+    return path.resolve('.', directory);
+  }
+
+  return path.resolve('.');
+}
 
 var fileExists = function(filepath) {
   // We need to check if a file exists in a case sensitive way that is not OS dependent.
@@ -29,9 +46,11 @@ var fileExists = function(filepath) {
 };
 
 module.exports = function() {
-  var output = fs.createWriteStream(
-    'package-' + extensionDescriptor.name + '-' + extensionDescriptor.version + '.zip'
-  );
+  var outputDirectory = getOutputDirectory();
+  var packageName = 'package-' + extensionDescriptor.name + '-' + extensionDescriptor.version + '.zip';
+  var outputPath = path.resolve(outputDirectory, packageName);
+
+  var output = fs.createWriteStream(outputPath);
   var zipArchive = archiver('zip');
 
   zipArchive.pipe(output);
@@ -48,4 +67,6 @@ module.exports = function() {
   });
 
   zipArchive.finalize();
+
+  console.log(chalk.green('wrote file to ' + outputPath));
 };

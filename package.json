@@ -8,6 +8,12 @@
     "email": "reactor@adobe.com"
   },
   "license": "Apache-2.0",
+  "scripts": {
+    "ready-test-directory": "echo \"preparing test directory\" && shx rm -rf test-dist && shx mkdir test-dist",
+    "ready-circular-dependency-directory": "shx rm -rf spec/circular-extension && shx mkdir spec/circular-extension",
+    "build-test-bundles": "echo \"packaging sources\" && ./tasks/test/createBundles.js",
+    "test": "npm run ready-test-directory && npm run ready-circular-dependency-directory && npm run build-test-bundles"
+  },
   "repository": {
     "type": "git",
     "url": "git@github.com:adobe/reactor-packager.git"
@@ -25,5 +31,8 @@
   },
   "engines": {
     "node": ">=12.13.0"
+  },
+  "devDependencies": {
+    "shx": "^0.3.3"
   }
 }
