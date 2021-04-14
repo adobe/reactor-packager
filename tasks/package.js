@@ -19,20 +19,55 @@ var fs = require('fs');
 var getPaths = require('./helpers/getPackagePaths.js');
 var path = require('path');
 var process = require('process');
+var yargs = require('yargs/yargs')
+var { hideBin } = require('yargs/helpers')
+var argv = yargs(hideBin(process.argv))
+  .usage('Usage: $0 [options]')
+  .options({
+    v: {
+      alias: 'verbose',
+      describe: 'Display extra information, if available',
+      type: 'boolean'
+    },
+    o: {
+      alias: 'out',
+      describe: 'The directory path or file path to write the archive',
+      type: 'string'
+    },
+    'dry-run': {
+      describe: 'Preview how the archive will be built',
+      type: 'boolean'
+    }
+  })
+  .argv
 
-var getOutputDirectory = function() {
-  var args = process.argv.slice(2);
-  if (args.length === 2 && args[0] === '--output-dir') {
-    var directory = args[1];
+var getOutputLocation = function() {
+  var defaultFileName = 'package-' + extensionDescriptor.name + '-' + extensionDescriptor.version + '.zip';
 
-    if (!fs.lstatSync(directory).isDirectory()) {
-      throw new Error('--output-dir "' + directory + '" is not a directory');
+  if (argv.out) {
+    var diskLocation = path.resolve(argv.out);
+
+    // We're treating their entire output as a directory, unless they try to terminate their string with some kind
+    // of extension. At that point, it better be ".zip"
+    var ext = path.extname(diskLocation);
+    if (Boolean(ext) && ext !== '.zip') {
+      console.error(chalk.red('The output extension must be ".zip"'));
+      process.exit(1);
+    } else if (!Boolean(ext)) {
+      // they gave us a directory only, append our file name
+      diskLocation = path.resolve(diskLocation, defaultFileName);
     }
 
-    return path.resolve('.', directory);
+    var dirLocation = path.dirname(diskLocation);
+    // if the directory doesn't exist, create it.
+    if (!fs.existsSync(dirLocation)) {
+      fs.mkdirSync(dirLocation);
+    }
+
+    return diskLocation;
   }
 
-  return path.resolve('.');
+  return path.resolve(defaultFileName);
 }
 
 var fileExists = function(filepath) {
@@ -45,27 +80,40 @@ var fileExists = function(filepath) {
 };
 
 module.exports = function() {
-  var outputDirectory = getOutputDirectory();
-  var packageName = 'package-' + extensionDescriptor.name + '-' + extensionDescriptor.version + '.zip';
-  var outputPath = path.resolve(outputDirectory, packageName);
-
-  var output = fs.createWriteStream(outputPath);
-  var zipArchive = archiver('zip');
-
-  zipArchive.pipe(output);
-
   var filepaths = getPaths(extensionDescriptor);
+  var outputLocation = getOutputLocation();
 
-  filepaths.forEach(function(filepath) {
-    if (!fileExists(filepath)) {
-      var error = 'Cannot find file: ' + filepath;
-      console.error(chalk.red(error));
-      process.exit(1);
+  if (argv.dryRun) {
+    filepaths.forEach(function(filepath) {
+      if (!fileExists(filepath)) {
+        var error = 'Cannot find file: ' + filepath;
+        console.error(chalk.red(error));
+        process.exit(1);
+      }
+    });
+
+    if (argv.verbose) {
+      filepaths.forEach(function(filePath) {
+        console.log(filePath)
+      });
     }
-    zipArchive.file(filepath);
-  });
+    console.log(chalk.green(filepaths.length + ' files will be written to ' + outputLocation));
+  } else {
+    var output = fs.createWriteStream(outputLocation);
+    var zipArchive = archiver('zip');
+    zipArchive.pipe(output);
 
-  zipArchive.finalize();
+    filepaths.forEach(function(filepath) {
+      if (!fileExists(filepath)) {
+        var error = 'Cannot find file: ' + filepath;
+        console.error(chalk.red(error));
+        process.exit(1);
+      }
+      zipArchive.file(filepath);
+    });
 
-  console.log(chalk.green('wrote file to ' + outputPath));
+    zipArchive.finalize();
+
+    console.log(chalk.green('wrote archive (' + filepaths.length+' files) to ' + outputLocation));
+  }
 };

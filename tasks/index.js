@@ -17,7 +17,6 @@
 var chalk = require('chalk');
 var validate = require('@adobe/reactor-validator');
 var extensionDescriptor = require('./helpers/extensionDescriptor');
-
 var error = validate(extensionDescriptor);
 
 if (error) {

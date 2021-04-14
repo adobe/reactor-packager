@@ -34,28 +34,33 @@ var errorHandler = function(error, stdout, stderr) {
 }.bind(this);
 
 // invoke the packager and bundle to test-dist
+var binScriptPath = path.resolve(__dirname, '../index.js');
+var testDistPath = path.resolve(__dirname, '../../test-dist');
+
+console.log('Packaging example-extension');
+var packageExample = [binScriptPath, '-o', testDistPath+'/non-circular.zip'].join(' ');
 exec(
-  '../../tasks/index.js --output-dir ../../test-dist',
-  { cwd: path.resolve(__dirname, '../../spec/extension-resources') },
+  packageExample,
+  { cwd: path.resolve(__dirname, 'example-extension') },
   errorHandler
 );
 
 // copy files to bundle a circular dependency version
-var specDirectory = path.resolve(__dirname, '../../spec');
-var commandsArray = [
-  'cp -r extension-resources/* circular-extension',
-  'rm -f circular-extension/src/lib/sharedModules/*.js',
+var createCircularDependencyExtension = [
+  'cp -r example-extension/* circular-extension', // use example-extension for the base files
+  'rm -f circular-extension/src/lib/sharedModules/*.js', // remove sharedModules, where we will introduce a circular dependency
   'rm -r circular-extension/extension.json',
-  'cp temporary-files/*.js circular-extension/src/lib/sharedModules',
-  'cp temporary-files/extension.json circular-extension/extension.json'
-]
-exec(commandsArray.join(' && '), { cwd: specDirectory }, errorHandler);
-
+  'cp circular-extension-files/*.js circular-extension/src/lib/sharedModules', // introduce a circular-dependency
+  'cp circular-extension-files/extension.json circular-extension/extension.json'
+];
+exec(createCircularDependencyExtension.join(' && '), { cwd: path.resolve(__dirname) }, errorHandler);
 
 // invoke the packager and bundle to test-dist
+console.log('Packaging circular-extension');
+var packageCircular = [binScriptPath, '-o', testDistPath+'/circular.zip'].join(' ');
 exec(
-  '../../tasks/index.js --output-dir ../../test-dist',
-  { cwd: path.resolve(__dirname, '../../spec/circular-extension') },
+  packageCircular,
+  { cwd: path.resolve(__dirname, 'circular-extension') },
   errorHandler
 );
 
