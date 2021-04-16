@@ -3,7 +3,7 @@ name: CI notify
 # Only trigger, when the build workflow succeeded
 on:
   workflow_run:
-    workflows: ["ci"]
+    workflows: ['ci']
     types:
       - completed
 
@@ -23,7 +23,7 @@ jobs:
         env:
          INCOMING_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
         with:
-         text: "A new version of ${{ GITHUB_REPOSITORY }}${{ steps.repoTag.outputs.tag }} has been released"
+         text: "A new version of ${{ env.GITHUB_REPOSITORY }}${{ steps.repoTag.outputs.tag }} has been released"
          attachments: |
            [
              {
