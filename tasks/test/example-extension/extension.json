@@ -1,0 +1,66 @@
+{
+  "displayName": "NonCircularDependencies",
+  "name": "noncirculardependencies",
+  "platform": "web",
+  "version": "1.0.0",
+  "description": "test the scaffold tool",
+  "author": {
+    "name": "adobe"
+  },
+  "viewBasePath": "src/view/",
+  "configuration": {
+    "viewPath": "configuration/configuration.html",
+    "schema": {
+      "$schema": "http://json-schema.org/draft-04/schema#",
+      "type": "object",
+      "properties": {}
+    }
+  },
+  "conditions": [
+    {
+      "displayName": "TestCondition",
+      "name": "testcondition",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "libPath": "src/lib/conditions/testcondition.js",
+      "viewPath": "conditions/testcondition.html"
+    }
+  ],
+  "actions": [
+    {
+      "displayName": "TestAction",
+      "name": "testaction",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "libPath": "src/lib/actions/testaction.js",
+      "viewPath": "actions/testaction.html"
+    }
+  ],
+  "dataElements": [
+    {
+      "displayName": "TestDataElement",
+      "name": "testdataelement",
+      "schema": {
+        "$schema": "http://json-schema.org/draft-04/schema#",
+        "type": "object",
+        "properties": {}
+      },
+      "libPath": "src/lib/dataElements/testdataelement.js",
+      "viewPath": "dataElements/testdataelement.html"
+    }
+  ],
+  "sharedModules": [
+    {
+      "name": "test-shared-module",
+      "libPath": "src/lib/sharedModules/testSharedModule.js"
+    }
+  ],
+  "exchangeUrl": "https://example.com",
+  "iconPath": "other-assets/icon.svg"
+}
