@@ -24,7 +24,8 @@
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
     "match-requires": "^2.0.1",
-    "ramda": "^0.27.0"
+    "ramda": "^0.27.0",
+    "yargs": "^16.2.0"
   },
   "bin": {
     "reactor-packager": "tasks/index.js"
@@ -33,7 +34,6 @@
     "node": ">=12.13.0"
   },
   "devDependencies": {
-    "shx": "^0.3.3",
-    "yargs": "^16.2.0"
+    "shx": "^0.3.3"
   }
 }
