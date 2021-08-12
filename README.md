@@ -1,12 +1,12 @@
-# Launch Extension Packager
+# Experience Platform Tags Extension Packager
 
 [![npm (scoped)](https://img.shields.io/npm/v/@adobe/reactor-packager.svg?style=flat)](https://www.npmjs.com/package/@adobe/reactor-packager)
 
-Launch, by Adobe, is a next-generation tag management solution enabling simplified deployment of marketing technologies. For more information regarding Launch, please visit our [product website](http://www.adobe.com/enterprise/cloud-platform/launch.html).
+Experience Platform Tags, by Adobe, is a next-generation tag management solution enabling simplified deployment of marketing technologies. For more information regarding Experience Platform Tags, please visit our [product website](http://www.adobe.com/enterprise/cloud-platform/launch.html).
 
-The extension packager is a command-line utility for packaging a Launch extension into a zip file suitable to be uploaded to Launch. While using this utility is not necessary, it will validate that your extension appears well-structured (e.g., files that are referenced exist in the directory) and make an effort to exclude anything from the zip file not necessary for the extension to operate.
+The extension packager is a command-line utility for packaging an Experience Platform Tags extension into a zip file suitable to be uploaded to Experience Platform Tags. While using this utility is not necessary, it will validate that your extension appears well-structured (e.g., files that are referenced exist in the directory) and make an effort to exclude anything from the zip file not necessary for the extension to operate.
 
-For more information about developing an extension for Launch, please visit our [extension development guide](https://experienceleague.adobe.com/docs/launch/using/extension-dev/overview.html#extension-dev).
+For more information about developing an extension for Experience Platform Tags, please visit our [extension development guide](https://experienceleague.adobe.com/docs/experience-platform/tags/extension-dev/overview.html?lang=en).
 
 ## Usage
 
