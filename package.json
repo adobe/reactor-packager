@@ -23,8 +23,9 @@
     "archiver": "^5.2.0",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
-    "match-requires": "^2.0.1",
     "ramda": "^0.27.0",
+    "requires-regex": "^1.0.4",
+    "strip-comments": "^2.0.1",
     "yargs": "^16.2.0"
   },
   "bin": {

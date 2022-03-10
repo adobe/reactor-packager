@@ -15,7 +15,7 @@
 var path = require('path');
 var glob = require('glob');
 var fs = require('fs');
-var matchRequires = require('match-requires');
+var matchRequires = require('./matchRequires');
 
 var R = require('ramda');
 
