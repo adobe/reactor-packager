@@ -32,6 +32,6 @@ module.exports = function matchRequires(str, options) {
 
     matches.push(tok);
   }
-  console.log(matches);
+
   return matches;
 };
