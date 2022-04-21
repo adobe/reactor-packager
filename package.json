@@ -19,7 +19,7 @@
     "url": "git@github.com:adobe/reactor-packager.git"
   },
   "dependencies": {
-    "@adobe/reactor-validator": "^2.0.8",
+    "@adobe/reactor-validator": "^2.2.0",
     "archiver": "^5.2.0",
     "chalk": "^4.1.0",
     "glob": "^7.1.6",
