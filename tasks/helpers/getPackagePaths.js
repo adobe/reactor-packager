@@ -25,6 +25,11 @@ var getAvailableTypes = function(descriptor) {
 };
 
 var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
+  // mobile doesn't have libPaths, but will have iconPaths, etc.
+  if (!hostPath) {
+    return accumPaths;
+  }
+
   accumPaths.push(hostPath);
   var source = fs.readFileSync(hostPath, {encoding: 'utf8'});
   matchRequires(source, true)
