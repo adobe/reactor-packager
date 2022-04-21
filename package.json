@@ -1,6 +1,6 @@
 {
   "name": "@adobe/reactor-packager",
-  "version": "4.2.0-beta.0",
+  "version": "4.2.0-beta.1",
   "description": "Command line utility for packaging a Launch extension into a zip file.",
   "author": {
     "name": "Adobe Systems",
