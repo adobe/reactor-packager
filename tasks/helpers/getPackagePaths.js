@@ -25,6 +25,11 @@ var getAvailableTypes = function(descriptor) {
 };
 
 var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
+  // mobile doesn't have libPaths, but will have iconPaths, etc.
+  if (!hostPath) {
+    return accumPaths;
+  }
+
   accumPaths.push(hostPath);
   var source = fs.readFileSync(hostPath, {encoding: 'utf8'});
   matchRequires(source, true)
@@ -59,11 +64,6 @@ var ensureArray = function (value) {
 }
 
 var getLibPaths = function(descriptor) {
-  // mobile doesn't have libPaths on their delegate modules.
-  if (descriptor.platform === 'mobile') {
-    return [];
-  }
-
   // We're getting the available types values from the descriptor. We flatten the array structure
   // and then get all the `libPath` values for all the delegates. We're dropping any empty value we
   // got at this point and we append the base path to the remaining values.
