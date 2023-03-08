@@ -24,6 +24,7 @@ var getAvailableTypes = function(descriptor) {
   return R.intersection(allTypes, R.keys(descriptor));
 };
 
+var acceptableFileExtensions = ['.js', '.json']
 var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
   // mobile doesn't have libPaths, but will have iconPaths, etc.
   if (!hostPath) {
@@ -37,8 +38,9 @@ var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
     .map(result => result.name)
     // Only care about relative paths. We don't care about require statements for core modules.
     .filter(module => module.indexOf('.') === 0)
-    // Allow extension devs to require JS files without the js extension
-    .map(module => path.extname(module) === '.js' ? module : module + '.js')
+    // If there's an acceptable file type, include it verbatim. Allow (assume) require of .js files when there's no
+    // specified file extension type. When the dev uses an unnacceptable type, `.js` is appended and things will break.
+    .map(module => acceptableFileExtensions.includes(path.extname(module)) ? module : module + '.js')
     // Add the paths to our list and recursively search their associated files.
     .reduce(function(accumPaths, relativeRequiredPath) {
       var normalizedRequiredPath = path.join(path.dirname(hostPath), relativeRequiredPath);
