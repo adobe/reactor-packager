@@ -1,6 +1,6 @@
 {
   "name": "@adobe/reactor-packager",
-  "version": "4.3.0",
+  "version": "4.3.1",
   "description": "Command line utility for packaging a Tags extension into a zip file.",
   "author": {
     "name": "Adobe Systems",
