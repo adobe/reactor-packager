@@ -38,7 +38,7 @@ var recursivelyAccumulateRequiredPaths = function(accumPaths, hostPath) {
     // Only care about relative paths. We don't care about require statements for core modules.
     .filter(module => module.indexOf('.') === 0)
     // Allow extension devs to require JS files without the js extension
-    .map(module => path.extname(module) === '.js' ? module : module + '.js')
+    .map(module => path.extname(module) === '.js' || path.extname(module) === '.json' ? module : module + '.js')
     // Add the paths to our list and recursively search their associated files.
     .reduce(function(accumPaths, relativeRequiredPath) {
       var normalizedRequiredPath = path.join(path.dirname(hostPath), relativeRequiredPath);
