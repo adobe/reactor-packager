@@ -10,9 +10,12 @@
  * governing permissions and limitations under the License.
  ****************************************************************************************/
 
-'use strict';
+import path from 'path';
+import { readFileSync } from 'fs';
+import { fileURLToPath } from 'url';
 
-var path = require('path');
-var extensionDescriptor = require(path.resolve('extension.json'));
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
+const extensionJsonPath = path.resolve('extension.json');
+const extensionDescriptor = JSON.parse(readFileSync(extensionJsonPath, 'utf8'));
 
-module.exports = extensionDescriptor;
+export default extensionDescriptor;

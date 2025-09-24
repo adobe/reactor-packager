@@ -12,10 +12,11 @@
  * governing permissions and limitations under the License.
  ****************************************************************************************/
 
-'use strict';
+import path from 'path';
+import { exec } from 'child_process';
+import { fileURLToPath } from 'url';
 
-var path = require('path');
-var exec = require('child_process').exec;
+const __dirname = path.dirname(fileURLToPath(import.meta.url));
 
 var errorHandler = function(error, stdout, stderr) {
   if (error) {
@@ -34,11 +35,11 @@ var errorHandler = function(error, stdout, stderr) {
 }.bind(this);
 
 // invoke the packager and bundle to test-dist
-var binScriptPath = path.resolve(__dirname, '../index.js');
+var binScriptPath = path.resolve(__dirname, '../../dist/index.js');
 var testDistPath = path.resolve(__dirname, '../../test-dist');
 
 console.log('Packaging example-extension');
-var packageExample = [binScriptPath, '-o', testDistPath+'/non-circular.zip'].join(' ');
+var packageExample = ['node', binScriptPath, '-o', testDistPath+'/non-circular.zip'].join(' ');
 exec(
   packageExample,
   { cwd: path.resolve(__dirname, 'example-extension') },
@@ -57,11 +58,9 @@ exec(createCircularDependencyExtension.join(' && '), { cwd: path.resolve(__dirna
 
 // invoke the packager and bundle to test-dist
 console.log('Packaging circular-extension');
-var packageCircular = [binScriptPath, '-o', testDistPath+'/circular.zip'].join(' ');
+var packageCircular = ['node', binScriptPath, '-o', testDistPath+'/circular.zip'].join(' ');
 exec(
   packageCircular,
   { cwd: path.resolve(__dirname, 'circular-extension') },
   errorHandler
 );
-
-
