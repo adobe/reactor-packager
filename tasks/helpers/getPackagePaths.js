@@ -10,14 +10,11 @@
  * governing permissions and limitations under the License.
  ****************************************************************************************/
 
-'use strict';
-
-var path = require('path');
-var glob = require('glob');
-var fs = require('fs');
-var matchRequires = require('./matchRequires');
-
-var R = require('ramda');
+import glob from 'glob';
+import fs from 'fs';
+import path from 'path';
+import * as R from 'ramda';
+import matchRequires from './matchRequires.js';
 
 var getAvailableTypes = function(descriptor) {
   var allTypes = ['events', 'conditions', 'actions', 'dataElements', 'sharedModules'];
@@ -99,4 +96,4 @@ var getPaths = function(descriptor, types) {
     .concat(getExtensionJsonPath());
 };
 
-module.exports = getPaths;
+export default getPaths;

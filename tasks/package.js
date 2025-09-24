@@ -10,18 +10,17 @@
  * governing permissions and limitations under the License.
  ****************************************************************************************/
 
-'use strict';
+import yargs from 'yargs/yargs';
+import { hideBin } from 'yargs/helpers';
+import archiver from 'archiver';
+import chalk from 'chalk';
+import extensionDescriptor from './helpers/extensionDescriptor.js';
+import fs from 'fs';
+import getPaths from './helpers/getPackagePaths.js';
+import path from 'path';
+import process from 'process';
 
-var archiver = require('archiver');
-var chalk = require('chalk');
-var extensionDescriptor = require('./helpers/extensionDescriptor');
-var fs = require('fs');
-var getPaths = require('./helpers/getPackagePaths.js');
-var path = require('path');
-var process = require('process');
-var yargs = require('yargs/yargs')
-var { hideBin } = require('yargs/helpers')
-var argv = yargs(hideBin(process.argv))
+const argv = yargs(hideBin(process.argv))
   .usage('Usage: $0 [options]')
   .options({
     v: {
@@ -39,7 +38,7 @@ var argv = yargs(hideBin(process.argv))
       type: 'boolean'
     }
   })
-  .argv
+  .argv;
 
 var getOutputLocation = function() {
   var defaultFileName = 'package-' + extensionDescriptor.name + '-' + extensionDescriptor.version + '.zip';
@@ -48,7 +47,6 @@ var getOutputLocation = function() {
     var diskLocation = path.resolve(argv.out);
 
     // We're treating their entire output as a directory, unless they try to terminate their string with some kind
-    // of extension. At that point, it better be ".zip"
     var ext = path.extname(diskLocation);
     if (Boolean(ext) && ext !== '.zip') {
       console.error(chalk.red('The output extension must be ".zip"'));
@@ -57,7 +55,6 @@ var getOutputLocation = function() {
       // they gave us a directory only, append our file name
       diskLocation = path.resolve(diskLocation, defaultFileName);
     }
-
     var dirLocation = path.dirname(diskLocation);
     // if the directory doesn't exist, create it.
     if (!fs.existsSync(dirLocation)) {
@@ -68,10 +65,9 @@ var getOutputLocation = function() {
   }
 
   return path.resolve(defaultFileName);
-}
+};
 
 var fileExists = function(filepath) {
-  // We need to check if a file exists in a case sensitive way that is not OS dependent.
   var fileDirectory = path.dirname(filepath);
   var folderFiles = fs.readdirSync(fileDirectory);
   var fileBaseName = path.basename(filepath);
@@ -79,7 +75,7 @@ var fileExists = function(filepath) {
   return folderFiles.indexOf(fileBaseName) !== -1;
 };
 
-module.exports = function() {
+export default function() {
   var filepaths = getPaths(extensionDescriptor);
   var outputLocation = getOutputLocation();
 
@@ -94,7 +90,7 @@ module.exports = function() {
 
     if (argv.verbose) {
       filepaths.forEach(function(filePath) {
-        console.log(filePath)
+        console.log(filePath);
       });
     }
     console.log(chalk.green(filepaths.length + ' files will be written to ' + outputLocation));
@@ -114,6 +110,6 @@ module.exports = function() {
 
     zipArchive.finalize();
 
-    console.log(chalk.green('wrote archive (' + filepaths.length+' files) to ' + outputLocation));
+    console.log(chalk.green('wrote archive (' + filepaths.length + ' files) to ' + outputLocation));
   }
 };

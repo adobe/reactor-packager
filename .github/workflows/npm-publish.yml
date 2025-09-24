@@ -7,7 +7,7 @@ on:
   workflow_dispatch:
     inputs:
       tag:
-        description: 'The tag to publish to: latest | next'
+        description: 'The tag to publish to: latest | next | beta'
         required: false
         default: 'latest'
   release:
@@ -18,23 +18,32 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Check Tag Name
-        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag != 'latest' && github.event.inputs.tag != 'next' }}
+        if: ${{ github.event_name == 'workflow_dispatch' && github.event.inputs.tag != 'latest' && github.event.inputs.tag != 'next' && github.event.inputs.tag != 'beta' }}
         run: |
-          echo 'Only the tags "latest" or "next" are supported. You entered "${{ github.event.inputs.tag }}"'
+          echo 'Only the tags "latest", "next", or "beta" are supported. You entered "${{ github.event.inputs.tag }}"'
           exit 1
       - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - name: Use Node.js 20.x
+        uses: actions/setup-node@v4
         with:
-          node-version: 'lts/iron'
-      - uses: actions/cache@v4
-        id: npm-cache
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json') }}
+          node-version: '20.x'
+          cache: 'npm'
+          registry-url: 'https://registry.npmjs.org'
       - name: Install dependencies
-        if: steps.npm-cache.outputs.cache-hit != 'true'
         run: npm ci
-      - run: npm test
+      - name: Build project
+        run: npm run build
+      - name: Verify build artifacts
+        run: |
+          test -f dist/index.js || exit 1
+          test -f dist/index.cjs || exit 1
+          echo "✅ Both ESM and CommonJS builds exist and ready for publishing"
+      - name: Run tests
+        run: npm test
+      - name: Test package contents
+        run: |
+          npm pack --dry-run
+          echo "✅ Package contents verified"
       - uses: JS-DevTools/npm-publish@v3
         with:
           token: ${{ secrets.ADOBE_BOT_NPM_TOKEN }}

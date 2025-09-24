@@ -1,0 +1,23 @@
+# Development files
+tasks/
+.github/
+.idea/
+.editorconfig
+.eslintrc
+rollup.config.js
+test-dist/
+
+# Source files (only ship built files)
+# Keep the built dist/ directory
+
+# Development dependencies and configs
+*.log
+.DS_Store
+node_modules/
+coverage/
+
+# Git files
+.git*
+
+# Test files and examples (if you don't want to ship them)
+# tasks/test/

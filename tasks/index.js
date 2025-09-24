@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /***************************************************************************************
  * (c) 2017 Adobe. All rights reserved.
  * This file is licensed to you under the Apache License, Version 2.0 (the "License");
@@ -12,20 +10,19 @@
  * governing permissions and limitations under the License.
  ****************************************************************************************/
 
-'use strict';
-
-var chalk = require('chalk');
-var validate = require('@adobe/reactor-validator');
-var extensionDescriptor = require('./helpers/extensionDescriptor');
-var error = validate(extensionDescriptor);
-
-if (error) {
-  console.error(chalk.red(error));
-  process.exit(1);
-}
+import validate from '@adobe/reactor-validator';
+import chalk from 'chalk';
+import extensionDescriptor from './helpers/extensionDescriptor.js';
+import packager from './package.js';
 
 try {
-  var packager = require('./package');
+  var error = validate(extensionDescriptor);
+
+  if (error) {
+    console.error(chalk.red(error));
+    process.exit(1);
+  }
+
   packager();
 } catch (e) {
   console.error(chalk.red(e.message));
