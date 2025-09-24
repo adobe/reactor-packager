@@ -53,10 +53,24 @@ var errorHandler = function(error, stdout, stderr) {
     return;
   }
 
+  // Check if stderr contains only expected warnings (not actual errors)
   if (stderr) {
-    console.error(`stderr: ${stderr}`);
-    process.exit(1);
-    return;
+    const isOnlyExpectedWarnings = stderr
+      .split('\n')
+      .filter(line => line.trim()) // Remove empty lines
+      .every(line =>
+        line.includes('stripComments option not yet supported') ||
+        line.trim() === '' // Allow empty lines
+      );
+
+    if (!isOnlyExpectedWarnings) {
+      console.error(`stderr: ${stderr}`);
+      process.exit(1);
+      return;
+    } else {
+      // Just log expected warnings but don't fail
+      console.log(`Expected warnings: ${stderr.trim()}`);
+    }
   }
 
   console.log(`stdout:\n${stdout}`);
